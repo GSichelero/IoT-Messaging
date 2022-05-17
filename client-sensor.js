@@ -4,12 +4,12 @@ const {spawn} = require('child_process');
 let acl = { x: 0, y: 0, z: 0 };
 
 xmpp.on("chat", (from, message)=>{
+    let dateHour = new Date().toLocaleString('pt-BR');
     console.log(`${message}\nFrom: ${from}`)
     if (message == "request info") {
         let proc = spawn("termux-sensor", ["-s", "LIS2DS Accelerometer", "-n", "1", ], {detached: true});
         proc.stdout.on('data', (data) => {
             // data format =  {"LIS2DS Accelerometer": { "values": [0.323, 5.3423, 5.24335] }}
-            let dateHour = new Date().toLocaleString('pt-BR');
             let dataJson = JSON.parse(data);
             let dataArray = dataJson["LIS2DS Accelerometer"]["values"];
             acl.x = dataArray[0];
