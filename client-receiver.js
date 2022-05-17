@@ -14,8 +14,9 @@ function sendMessageOnInterval(){
 }
 
 xmpp.on("chat", (from, message)=>{
+    let dateHour = new Date().toLocaleString('pt-BR');
     console.log(`New Sensor Info!\n${message}\nFrom: ${from}\n`)
-    xmpp.send("gsichelero@localhost", "Sensor Information Received!")
+    xmpp.send("gsichelero@localhost", "Sensor Information Received!" + "\n" + "Time: " + dateHour + "\n");
 })
 
 xmpp.connect({
