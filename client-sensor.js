@@ -9,6 +9,7 @@ xmpp.on("chat", (from, message)=>{
         let proc = spawn("termux-sensor", ["-s", "LIS2DS Accelerometer", "-n", "1", ], {detached: true});
         proc.stdout.on('data', (data) => {
             // data format =  {"LIS2DS Accelerometer": { "values": [0.323, 5.3423, 5.24335] }}
+            let dateHour = new Date().toLocaleString('pt-BR');
             let dataJson = JSON.parse(data);
             let dataArray = dataJson["LIS2DS Accelerometer"]["values"];
             acl.x = dataArray[0];
@@ -16,7 +17,7 @@ xmpp.on("chat", (from, message)=>{
             acl.z = dataArray[2];
         });
         xmpp.send("admin@localhost",
-        `Acceleration:\n${"X: " + acl.x + "\n" + "Y: " + acl.y + "\n" + "Z: " + acl.z}`)
+        `Acceleration:\n${"X: " + acl.x + "\n" + "Y: " + acl.y + "\n" + "Z: " + acl.z + "\n" + "Time: " + dateHour}`);
     }
 })
 
